@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head><title>Quotes</title></head>
+<body>
+  <h2>Quote Generator</h2>
+  <p id="quote"></p>
+  <button onclick="newQuote()">New Quote</button>
+
+  <script>
+    let quotes=["Stay positive.","Work hard.","Dream big.","Never give up."];
+    function newQuote(){
+      let q=quotes[Math.floor(Math.random()*quotes.length)];
+      document.getElementById("quote").innerText=q;
+    }
+    newQuote();
+  </script>
+</body>
+</html>

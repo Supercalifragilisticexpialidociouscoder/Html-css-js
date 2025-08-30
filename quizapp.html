@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head><title>Quiz</title></head>
+<body>
+  <h2>Quiz</h2>
+  <p id="question"></p>
+  <div id="options"></div>
+  <p id="score"></p>
+
+  <script>
+    let quiz=[{q:"2+2=?",a:["3","4","5"],c:1},{q:"Capital of India?",a:["Delhi","Mumbai","Kolkata"],c:0}];
+    let index=0,score=0;
+
+    function loadQ(){
+      let q=quiz[index];
+      document.getElementById("question").innerText=q.q;
+      let opts="";
+      q.a.forEach((o,i)=>{opts+=`<button onclick="check(${i})">${o}</button><br>`});
+      document.getElementById("options").innerHTML=opts;
+    }
+    function check(i){
+      if(i==quiz[index].c) score++;
+      index++;
+      if(index<quiz.length) loadQ(); else document.getElementById("score").innerText="Score: "+score;
+    }
+    loadQ();
+  </script>
+</body>
+</html>

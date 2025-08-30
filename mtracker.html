@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><title>Expense Tracker</title></head>
+<body>
+  <h2>Expense Tracker</h2>
+  <input id="desc" placeholder="Description">
+  <input id="amt" type="number" placeholder="Amount">
+  <button onclick="add()">Add</button>
+  <ul id="list"></ul>
+  <p id="balance"></p>
+
+  <script>
+    let bal=0;
+    function add(){
+      let d=document.getElementById("desc").value;
+      let a=+document.getElementById("amt").value;
+      bal+=a;
+      let li=document.createElement("li");
+      li.innerText=`${d}: ${a}`;
+      document.getElementById("list").appendChild(li);
+      document.getElementById("balance").innerText="Balance: "+bal;
+    }
+  </script>
+</body>
+</html>

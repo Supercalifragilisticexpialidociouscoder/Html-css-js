@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+</head>
+<body>
+  <h2>Weather App</h2>
+  <input id="city" placeholder="Enter city">
+  <button onclick="getWeather()">Check</button>
+  <p id="result"></p>
+
+  <script>
+    async function getWeather() {
+      let city = document.getElementById("city").value;
+      try {
+        let res = await fetch(
+          `https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=76b441915884ffe2ef12ef5b04117395&units=metric`
+        );
+        let data = await res.json();
+
+        if (data.cod === 200) {
+          document.getElementById("result").innerText =
+            `${data.name}: ${data.main.temp}°C, ${data.weather[0].description}`;
+        } else {
+          document.getElementById("result").innerText = "City not found 😅";
+        }
+      } catch (err) {
+        document.getElementById("result").innerText = "Error fetching data ❌";
+      }
+    }
+  </script>
+</body>
+</html>

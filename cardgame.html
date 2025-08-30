@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Memory Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1e272e, #2f3640);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: #fff;
+      flex-direction: column;
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    #board {
+      display: grid;
+      grid-template-columns: repeat(3, 80px);
+      gap: 15px;
+    }
+    button {
+      width: 80px;
+      height: 80px;
+      font-size: 24px;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      background: #576574;
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+    }
+    button:hover {
+      background: #718093;
+      transform: scale(1.05);
+    }
+    button.matched {
+      background: #10ac84 !important;
+      cursor: default;
+    }
+    #message {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    #restart {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #ff9f43;
+      color: #fff;
+    }
+    #restart:hover {
+      background: #e58e26;
+    }
+  </style>
+</head>
+<body>
+  <h1>Memory Game</h1>
+  <div id="board"></div>
+  <div id="message"></div>
+  <button id="restart" onclick="startGame()">Restart</button>
+
+  <script>
+    let cards = ["A","A","B","B","C","C"];
+    let flipped = [], matched = 0, board, message;
+
+    function startGame() {
+      flipped = [];
+      matched = 0;
+      message.innerText = "";
+      board.innerHTML = "";
+
+      let shuffled = [...cards].sort(() => 0.5 - Math.random());
+
+      shuffled.forEach(c => {
+        let btn = document.createElement("button");
+        btn.innerText = "?";
+        btn.onclick = () => flip(btn, c);
+        board.appendChild(btn);
+      });
+    }
+
+    function flip(btn, c) {
+      if (flipped.length < 2 && btn.innerText === "?") {
+        btn.innerText = c;
+        flipped.push({btn, c});
+
+        if (flipped.length === 2) {
+          setTimeout(() => {
+            if (flipped[0].c !== flipped[1].c) {
+              flipped[0].btn.innerText = flipped[1].btn.innerText = "?";
+            } else {
+              flipped[0].btn.classList.add("matched");
+              flipped[1].btn.classList.add("matched");
+              matched++;
+              if (matched === cards.length / 2) {
+                message.innerText = "🎉 You Win!";
+              }
+            }
+            flipped = [];
+          }, 800);
+        }
+      }
+    }
+
+    window.onload = () => {
+      board = document.getElementById("board");
+      message = document.getElementById("message");
+      startGame();
+    };
+  </script>
+</body>
+</html>
